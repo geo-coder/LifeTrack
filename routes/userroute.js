@@ -3,6 +3,7 @@ const router=new express.Router
 const User = require('../models/user')
 const mongoose=require('mongoose')
 const auth=require('../middleware/auth')
+const cookieParser = require('cookie-parser')
 
 
 // router.post('/users', async (req, res)=>{
@@ -24,9 +25,39 @@ const auth=require('../middleware/auth')
 
 // })
 
-//post new user
+
+router.get('/', async (req, res) => {
+    res.render('index', { title: 'Hey Idiot', message: 'Hello there!' })
+  })
+
+
+
+
+
+
+router.get('/newuser',async (req, res) => {
+
+    res.render('newuser')
+  
+})
+
+
+router.get('/userarea', auth, async (req,res) =>{
+
+    
+    res.render('userarea')
+    
+
+
+})
+
+
+
+
+  //create new user (post)
 router.post('/users', async (req, res)=>{
 
+    
     // console.log("Post request worked")
 
     // res.send("posted")
@@ -43,10 +74,15 @@ router.post('/users', async (req, res)=>{
     const user = new User(req.body)
     user._id=new mongoose.Types.ObjectId
     
+    const token = await user.genAuthToken()
+
     await user.save()
+    //console.log('token just before saving cookie', token)
+        
+    //res.cookie('token', token).sendStatus(200) //.redirect('/userarea')
+    res.cookie('token', token).redirect('/userarea')
+    
 
-
-    res.sendStatus(200)
     } catch (e){
         res.sendStatus(400).send('na')
     }
@@ -56,7 +92,7 @@ router.post('/users', async (req, res)=>{
 
 //find user by id
 router.get('/users/:id', async (req, res)=>{
-    console.log("id parameter searched")
+    
 
     try{
         const _id = req.params.id
@@ -89,10 +125,19 @@ router.get('/users/:id', async (req, res)=>{
 router.get('/users', async (req,res)=>{
 
     res.send("hello")
-    console.log("Get request worked")
+    
 
 
 })
+
+
+router.get('/login', async(req, res)=>{
+
+
+    res.render('loginscreen')
+})
+
+
 
 
 //login route
@@ -131,7 +176,8 @@ router.get('/logout', auth, async (req, res)=>{
 
         req.user.tokens=[]
         await req.user.save()
-        res.send(req.user)
+        //res.send(req.user)
+        res.redirect('/')
     } catch (e) {
         res.status(500).send()
 

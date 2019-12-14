@@ -12,10 +12,12 @@ var userSchema = mongoose.Schema({
 
         {
             address: {
+                
                 street: String,
                 city: String,
-                startDate: Date,
-                endDate: Date
+                startDate: String,
+                endDate: String
+                
 
             }
 
@@ -74,10 +76,11 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.methods.genAuthToken=async function() { //generate authentication token, save it to the user
     const user = this
-    console.log(user._id)
+    
     const token=jwt.sign({_id:user._id.toString()}, 'this is private key')
     user.tokens=user.tokens.concat({token})
     await user.save()
+    return token
 
 }
 

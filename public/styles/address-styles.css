@@ -1,0 +1,16 @@
+.delete{
+    display: inline-block;
+    margin-top:30px;
+    cursor:pointer;
+    background-color: rgb(54, 52, 52);
+    color: orange;
+    padding: 10px 20px;
+    border-radius: 5px;
+    
+    
+}
+
+.delete:hover{
+    color:red;
+    
+}

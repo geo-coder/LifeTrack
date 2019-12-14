@@ -1,0 +1,37 @@
+html
+  head
+    title= "Life-Track"
+    link(rel="stylesheet" type="text/css" href="/styles/address-styles.css")
+  body
+    h1= "Address history"
+    a(href='/new_address') Add address
+    br
+    a(href='/userarea') Dashboard
+    br
+    br
+    
+    
+    
+    div.addresslist
+    
+      each val in addresses
+       div.address
+          div=val.address.street
+          div=val.address.city
+          div=val.address.startDate
+          div=val.address.endDate
+          a(class='delete' id=val.id) Delete
+          br
+          br
+
+//- script(type="text/javascript").
+//-   document.querySelectorAll('.delete').forEach(item => {
+//-   item.addEventListener('click', event => {
+//-     console.log('clicked', item.id)
+//-     var xhttp = new XMLHttpRequest(); 
+//-     xhttp.open("DELETE", "/addresses/"+item.id, true);
+//-     xhttp.send();
+//-   })
+//-   })
+
+script(src="/scripts/address-script.js")
