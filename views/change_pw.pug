@@ -1,0 +1,37 @@
+extends header.pug
+
+
+block header
+  -var buttonLink='/addresses'
+  -var buttonText='Back to Addresses'
+  -var button2disabled='disabled'
+  -var button2visibility='visibility:hidden'
+
+block content
+  .entry
+    
+    h1(class='bodyheading')="Change Password"  
+    
+    form(method='POST' action='/change_pw' id='changePWForm')
+        label(for='oldPW') Old password: 
+        input(type='password' name='oldPW' required)
+        
+        br
+        br
+        
+        label(for='newPW') New password: 
+        input(type='password' name='newPW' id='pw1')
+        
+        br
+        br
+
+
+        label(for='newPW2') Retype new password: 
+        input(type='password' name='newPW2' id='pw2')
+
+        br
+        br
+        
+        button(type='submit') Update password
+block scripts
+  script(src="/scripts/change_pw.js")

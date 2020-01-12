@@ -1,0 +1,39 @@
+extends header.pug
+
+
+block header
+  -var buttonLink='/addresses'
+  -var buttonText='Back to Addresses'
+  -var button2disabled='disabled'
+  -var button2visibility='visibility:hidden'
+
+block content
+  .entry
+    
+    h1(class='bodyheading')="Update Profile"  
+    
+    form(method='POST' action='/update_profile')
+           
+        label(for='firstName') First name: 
+        input(type='text' value=firstName name='firstName' required)
+        
+        br
+        br
+        
+        label(for='lastName') Last Name: 
+        input(type='text' value=lastName name='lastName')
+        
+        br
+        br
+
+
+        label(for='email') E-mail: 
+        input(type='text' value=email name='email')
+
+        br
+        br
+
+        
+        button(type='submit') Save changes to profile
+
+    

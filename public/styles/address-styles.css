@@ -1,3 +1,55 @@
+
+#front-body{
+    background-color:rgb(114, 113, 113);
+    
+    margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.hero-image {
+    
+    background-image: linear-gradient(rgba(250, 244, 244, 0.5), rgba(255, 254, 254, 0.5)), url("/images/map.jpg");
+  
+    /* Set a specific height */
+    height: 80%;
+  
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+  }
+
+.hero-content {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    border-color: darkgray;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 20px;
+    padding:30px;
+    
+    background-color: rgba(20, 19, 18, 0.9);
+    
+    
+}
+
+.hero-content p {
+    font-size: larger;
+    color: white;
+}
+
+.hero-content h1{
+    color:white;
+}
+
+
 .delete{
     display: inline-block;
     margin-top:30px;
@@ -8,9 +60,333 @@
     border-radius: 5px;
     
     
+    
 }
 
 .delete:hover{
     color:red;
     
+}
+
+.edit{
+    display: inline-block;
+    margin-top:30px;
+    cursor:pointer;
+    background-color: rgb(54, 52, 52);
+    color: orange;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin:5px;
+    
+    
+}
+
+.edit:hover{
+    color:red;
+    
+}
+
+header{
+    background:rgb(114, 113, 113);
+    padding:15px;
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100%
+}
+
+#title{
+    font-family: 'Kaushan Script', cursive;
+    text-align: left;
+    color:orange;
+    font-size:30px;
+    display: inline;
+}
+
+
+
+
+#signout{
+    
+    float: right;
+    
+    color: orange;
+    text-decoration: none;
+    margin-right:40px;
+}
+
+#signout:hover{
+    cursor: pointer;
+    
+}
+
+.rightdiv{
+    float:right;
+}
+
+
+.rightLink{
+    
+    
+    display: block;
+    color: orange;
+    text-decoration: none;
+    margin-right:40px;
+    margin-bottom: 3px;
+    cursor:pointer;
+    background-color: rgb(54, 52, 52);
+    color: orange;
+    padding: 5px 1px 5px 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    width:90px;
+    font-size: medium;
+}
+
+.rightLink:hover{
+    cursor: pointer;
+    color:red;
+    
+}
+
+
+.material-icons.md-48{
+
+    font-size:48px;
+    float:right;
+    color:black;
+    margin-right: 5px;
+}
+.material-icons.md-48:hover{
+    cursor: default;
+}
+
+.bar-button{
+    display: inline-block;
+    margin-top:0px;
+    cursor:pointer;
+    background-color: rgb(54, 52, 52);
+    color: orange;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 30px;
+
+}
+
+
+
+.bar-button:hover{
+    color:red;
+}
+
+
+
+
+button{
+    display: inline-block;
+    margin-top:0px;
+    background-color: rgb(54, 52, 52);
+    color: orange;
+    padding: 15px 25px;
+    border-radius: 5px;
+    
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+}
+
+button:hover{
+    color:red;
+    cursor: pointer;
+}
+
+
+
+
+.addresslist{
+    margin-top:120px;
+    display:inline-block;
+    
+}
+
+.address{
+    padding-top: 10px;
+    text-align: center;
+    font-size: large;
+    margin:auto;
+    /* width:20%; */
+    width:380px;
+    /* border-style: solid;
+    border-color:rgb(204, 201, 201); */
+    background-color: lightgray;
+    margin:20px;
+}
+
+#dispbox{
+    /* margin-top: 140px;
+    margin-right: 500px; */
+    float: right;
+    width:800px;
+    height:600px;
+    background-color: lightgray;
+    position:fixed;
+    top:150px;
+    left:480px;
+    
+
+    
+}
+
+#detailboxheading{
+    background-color: rgb(114, 113, 113);
+    color:orange;
+    font-family: 'Kaushan Script', cursive;
+    
+}
+
+
+#addressnotes{
+    margin: 5px 15px;
+    font-size: large;
+}
+
+
+
+#addressformcontainer{
+    text-align: center;
+    display: block;
+    margin-top: 30px;
+    
+}
+#address_form{
+    display: inline-block;
+    margin-top:60px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: left;
+
+    
+}
+
+label{
+    font-size: large;
+}
+
+#newaddressubmit{
+    margin-top: 10px;
+}
+
+.textAddressList{
+    margin-top:140px;
+    margin:auto;
+    margin-top:140px;
+    background-color: lightgray;
+    width:500px;
+}
+
+.textAddressList p{
+    text-align: left;
+    font-size: large;
+}
+
+.entry{
+    margin:auto;
+    margin-top: 120px;
+    background-color: lightgray;
+    width: 600px;
+}
+
+.entryContent{
+    padding: 0px 10px 10px 10px;
+}
+
+.bodyheading{
+    font-family: 'Kaushan Script', cursive;
+    color:orange;
+    background-color: rgb(114, 113, 113);
+    padding-left: 5px;
+}
+
+
+#loginForm{
+    
+    padding:5px 20px;
+}
+
+#profilebox{
+    margin: auto;
+    margin-top: 120px;
+    width: 600px;
+    background-color: lightgray;
+}
+
+
+.linkbutton{
+    
+    display: inline-block;
+    margin:30px 10px;
+    cursor:pointer;
+    background-color: rgb(54, 52, 52);
+    color: orange;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+
+}
+        
+        
+.linkbutton:hover{
+    color:red;
+        
+}
+
+
+#updateprofilecontainer{
+    margin: auto;
+    margin-top: 120px;
+    width: 600px;
+    background-color: lightgray;
+}
+
+
+#mainContent{
+    padding:40px 20px;
+    
+}
+
+#mainContent p{
+    font-size: larger;
+}
+
+#frontPageIcon{
+    float: left;
+}
+#centeredButtons{
+    margin: auto;
+    
+    text-align: center;
+}
+
+#front-head{
+    background-color:rgb(114, 113, 113);
+    
+    z-index: 2;
+}
+
+#newUserContent{
+    padding: 5px 10px;
+}
+
+#clickableTitle{
+    font-family: 'Kaushan Script', cursive;
+    text-align: left;
+    color:orange;
+    font-size:30px;
+    display: inline;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.errorMessages{
+    white-space:pre-line;
 }

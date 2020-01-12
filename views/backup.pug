@@ -1,22 +1,21 @@
-extends header.pug
+html(lang='en')
+head
+  title='Life-Track'
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> 
+    link(rel="stylesheet" type="text/css" href="/styles/address-styles.css")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+body
+
+  header
+    h1(id='title')='Life-Track'
+    a(href='/addresses' class='bar-button') Back to Addresses
+    a(href='/logout' id='signout') Sign out
+    i(class="material-icons md-48") account_circle
 
 
-block header
-  -var buttonLink='/addresses'
-  -var buttonText='Back to Addresses Without Saving'
-  -var button2disabled='disabled'
-  -var button2visibility='visibility:hidden'
 
 
-block content
-  br
-  br
-  br
-  br
-  br
-  a(href='/restore') Dummy Data
 
-  
   div(id="addressformcontainer")
     form(method='POST' action='/addresses' id='address_form')
           h1="Add New Address"

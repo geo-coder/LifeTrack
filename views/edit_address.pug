@@ -1,0 +1,95 @@
+extends header.pug
+
+
+block header
+  -var buttonLink='/addresses'
+  -var buttonText='Back to Addresses Without Saving'
+  -var button2disabled='disabled'
+  -var button2visibility='visibility:hidden'
+
+block content
+  div(id="addressformcontainer")
+      
+      form(method='POST' action='/edit_address/'+_id id='address_form')
+        h1="Editing " + address.addressLineOne
+        
+        
+        div
+          
+          
+          
+          label(for='addressLineOne') Address: 
+          input(type='text' id='addressLineOne' value=address.addressLineOne name='addressLineOne' maxlength='50' required)
+          
+          br
+          br
+          
+          label(for='unitNo') Unit/Apt Number (if any): 
+          input(type='text' id='unitNo' value=address.unitNo name='unitNo' maxlength='10')
+          
+          br
+          br
+
+
+          label(for='city') City: 
+          input(type='text' id='city' value=address.city name='city' maxlength='50' required)
+
+          br  
+          br
+          
+          label(for='state') State Abbreviation: 
+          input(type='text' id='state' value=address.state name='state' maxlength="2" required)
+
+          br  
+          br
+
+          
+          label(for='zip') Zipcode: 
+          input(type='text' id='zip' value=address.zip name='zip' maxlength="10")
+
+          br
+          br
+
+          label(for='notes') Notes: 
+          br
+          //- input(type='text' id='notes' placeholder='Notes.' name='notes')//
+          textarea(id='notes' name='notes' rows='5' cols='60' maxlength="1000") #{address.notes}
+          
+
+          br  
+          br
+
+          label(for='startDate') Start Date: 
+          input(type='date' id='startDate' name='startDate' value=address.startDate)
+
+          br  
+          br
+
+          if address.endDate==='present'
+                  
+            label(for='endDate') End Date: 
+            input(type='date' id='endDate' name='endDate')
+
+            
+
+            
+            label(for='toPresent')                I'm still living here 
+            
+            input(type="checkbox" name="toPresent" value="toPresent" id='toPresent' checked)
+          else 
+            label(for='endDate') End Date: 
+            input(type='date' id='endDate' name='endDate' value=address.endDate)
+
+            
+
+            
+            label(for='toPresent')                I'm still living here 
+            
+            input(type="checkbox" name="toPresent" value="toPresent" id='toPresent')
+          br
+
+
+          
+          button(type='submit' id='newaddressubmit') Save changes to address
+
+          script(src="/scripts/edit-address.js")

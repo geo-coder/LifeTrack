@@ -1,23 +1,33 @@
-html(lang='en')
-head
-title LifeTrack
-body
-h1 Welcome to the User Area
+extends simpleHeader.pug
 
 
-form(method='POST' action='/users')
-          
-          
-          div
-            
-           
-            
-            label(for='email') Email
-            input(type='text' id='email' placeholder='email' name='email')
-            
-            br
-            br
+block header
+  
 
-            label(for='password') Password
-            input(type='password' id='password' placeholder='password' name='password')
-          button(type='submit') Log in 
+block content
+
+
+
+
+  
+  .entry
+    h1(class='bodyheading') Login
+    form(method='POST' action='/login' id='loginForm')
+              
+              
+              div
+                
+              
+                
+                label(for='email') Email: 
+                input(type='text' id='email' placeholder='email' name='email')
+                
+                br
+                br
+
+                label(for='password') Password: 
+                input(type='password' id='password' placeholder='password' name='password')
+                br
+                br
+                br
+                button(type='submit') Log in 

@@ -1,0 +1,50 @@
+html 
+  head
+    title= "Life-Track"
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> 
+    link(rel="stylesheet" type="text/css" href="/styles/address-styles.css")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+  body
+    
+    header
+      h1(id='title')='Life-Track'
+      a(href='/new_address' class='bar-button') +Add address
+      a(href='/logout' id='signout') Sign out
+      i(class="material-icons md-48") account_circle 
+    
+    
+    
+    
+    div.addresslist
+    
+      each val in addresses
+       
+       div.address
+          div=val.address.addressLineOne
+          div=val.address.unitNo
+          div=val.address.city +', ' + val.address.state + ' ' + val.address.zip
+          div(style="display: none;")=val.address.notes
+          div=val.address.formattedStart + ' to ' + val.address.formattedEnd
+          a(class='delete' id=val.id) Delete
+          a(class='edit' id=val.id) Edit
+          br
+          br
+    #dispbox
+      h1(id='detailboxheading')=''
+      p(id='addressnotes')
+
+
+//- script(type="text/javascript").
+//-   document.querySelectorAll('.delete').forEach(item => {
+//-   item.addEventListener('click', event => {
+//-     console.log('clicked', item.id)
+//-     var xhttp = new XMLHttpRequest(); 
+//-     xhttp.open("DELETE", "/addresses/"+item.id, true);
+//-     xhttp.send();
+//-   })
+//-   })
+
+
+
+script(src="/scripts/address-script.js")

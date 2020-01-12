@@ -4,21 +4,75 @@ var jwt = require('jsonwebtoken')
 
 var userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
+    firstName: {
+        type: String,
+        maxlength: [64, 'First name exceeds maximum length of 64 characters.']
+    
+    
+    },
+    lastName: {
+        type: String,
+        maxlength: [64, 'Last name exceeds maximum length of 64 characters.']
+    },
+    email: {
+        unique: true,
+        type: String,
+        required: true,
+        validate: {
+            validator: function(val) {
+                var pattern=/@/
+                
+                
+                if (pattern.test(val)===false) {
+                    return false
+                }
+            },
+            message: "E-mail missing @ symbol."
+        },
+        
+    },
+    password: {
+        type: String,
+        required: true
+    },
     addresses: [
 
         {
             address: {
-                
-                street: String,
+                addressLineOne: String,
+                unitNo: String,
                 city: String,
+                state: String,
+                zip: String,
+                notes: String,
                 startDate: String,
-                endDate: String
+                endDate: String,
+                formattedStart: String,
+                formattedEnd: String,
                 
+                
+            }
 
+
+        }
+    ],
+
+    deletedAddresses: [
+
+        {
+            address: {
+                addressLineOne: String,
+                unitNo: String,
+                city: String,
+                state: String,
+                zip: String,
+                notes: String,
+                startDate: String,
+                endDate: String,
+                formattedStart: String,
+                formattedEnd: String,
+                
+                
             }
 
 
@@ -86,5 +140,20 @@ userSchema.methods.genAuthToken=async function() { //generate authentication tok
 
 
 var User=mongoose.model('User', userSchema)
+
+User.init().then(() => {
+    // safe to create users now.
+ })
+
+
+
+ userSchema.post('save', function(error, doc, next) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+      next(new Error('There was a duplicate key error'));
+    } else {
+      next();
+    }
+  });
+
 
 module.exports=User

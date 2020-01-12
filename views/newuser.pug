@@ -1,76 +1,64 @@
-doctype html
-html(lang='en')
-head
-title LifeTrack
-body
-h1 New User Login
+extends simpleHeader.pug
+
+
+block header
+  
 
 block content
 
-//- form(method='POST' action='/users')
 
-//- label( for="inputFirstName") First name  
-//- input(type="text" name="firstname" id="inputFirstName" required autofocus)
+  
+  .entry
+    h1(class='bodyheading') Create account
 
-//- br
-//- br
 
-//- label( for="inputLastName") Last name  
-//- input(type="text" name="lastname" id="inputLastName" required autofocus)
 
-//- br
-//- br
 
-//- label( for="inputEmail" class="sr-only") Email address  
-//- input(type="email" name="username" id="inputEmail" placeholder="Email address" required autofocus)
-
-//- br
-//- br
-
-//- label(for="inputPassword" class="sr-only") Password  
-//- input(type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required)
-
-//- br
-//- br
-
-//- input(type="submit", value="Create Account!")
-
-//- form(method='POST' action='/users')
+    div(id="newUserContent")
+      form(method='POST' action='/users' id='newUserForm')
           
           
-//-           div.form-group
-//-             label(for='email') Email
-//-             input.form-control(type='text' id='email' placeholder='email' name='email')
-//-           div.form-group
-//-             label(for='password') Password
-//-             input.form-control(type='password' id='password' placeholder='password' name='password')
-//-           button(type='submit') Log in 
+      
+        
+        label(for='firstname') First name: 
+        input(type='text' id='firstname' placeholder='first name' name='firstName' maxlength='50')
+        
+        br
+        br
 
-form(method='POST' action='/users')
-          
-          
-          div
-            
-            label(for='firstname') First name:
-            input(type='text' id='firstname' placeholder='first name' name='firstName')
-            
-            br
-            br
-
-            label(for='lastname') First name:
-            input(type='text' id='lastname' placeholder='last name' name='lastName')
-            
-            br
-            br
+        label(for='lastname') Last name: 
+        input(type='text' id='lastname' placeholder='last name' name='lastName' maxlength='50')
+        
+        br
+        br
 
 
-            
-            label(for='email') Email
-            input(type='text' id='email' placeholder='email' name='email')
-            
-            br
-            br
+        
+        label(for='email') Email: 
+        input(type='text' id='email' placeholder='email' name='email' maxlength='50' required)
+        
+        br
+        br
 
-            label(for='password') Password
-            input(type='password' id='password' placeholder='password' name='password')
-          button(type='submit') Log in 
+        label(for='password') Password: 
+        input(type='password' id='password' name='password' required)
+        br
+        br
+
+        label(for='pw2') Retype Password: 
+        input(type='password' name='pw2' id='pw2' required)
+        br
+        br
+
+
+
+
+        button(type='submit' id='createAccount') Create account
+        
+
+
+
+
+block scripts
+  script(src="/scripts/newuser.js")
+      

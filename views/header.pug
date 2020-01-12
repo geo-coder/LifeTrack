@@ -1,0 +1,32 @@
+html
+  head
+    title= "Life-Track"
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> 
+    link(rel="stylesheet" type="text/css" href="/styles/address-styles.css")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+  body
+    
+    
+    block header
+    header
+        -var buttonLink
+        -var buttonText
+        -var button2Link
+        -var button2Text
+        -var button2disabled
+        -var button2visibility
+        h1(id='title')='Life-Track'
+        a(href=buttonLink class='bar-button') #{buttonText}
+        a(href=button2Link class='bar-button' style=button2visibility button2disabled) #{button2Text}
+        .rightdiv
+          a(href='/view_profile' class='rightLink') Profile
+          a(href='/logout' id='3signout' class='rightLink') Sign out         
+        i(class="material-icons md-48" id='dropButton') account_circle
+            
+          
+
+    block content
+    block scripts
+  
+

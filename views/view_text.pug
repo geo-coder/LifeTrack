@@ -1,0 +1,35 @@
+extends header.pug
+
+
+block header
+  -var buttonLink='/addresses'
+  -var buttonText='Back to Addresses'
+  -var button2Link='/view_text'
+  -var button2Text='View Addresses as Text'
+
+block content
+    
+    
+    .textAddressList
+      
+      button(id='copytext') Copy to Clipboard
+      h1 Address history for #{firstName} #{lastName}
+      textarea(rows='15' cols='60' id='textaddresses')
+        for val in addresses
+            if val.address.unitNo
+              |#{val.address.addressLineOne}
+              |#{val.address.unitNo}
+              |#{val.address.city}
+              |#{val.address.formattedStart} 
+              |
+              |   
+            else
+              |#{val.address.addressLineOne}
+              |#{val.address.city}
+              |#{val.address.formattedStart} 
+              |
+              |
+              
+            
+block scripts
+  script(src="/scripts/view-text.js")
