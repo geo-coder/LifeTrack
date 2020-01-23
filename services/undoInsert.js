@@ -1,6 +1,6 @@
 
 
-const insertAddress = async (user, req, res, fromRoute) =>{
+const undoInsert = async (user, req, res, fromRoute) =>{
 
     
 
@@ -54,7 +54,7 @@ const insertAddress = async (user, req, res, fromRoute) =>{
     
     await user.save()
     
-    res.redirect('/addresses')
+    res.send(user.addresses)
     
 } catch (e) {
     
@@ -69,4 +69,4 @@ const insertAddress = async (user, req, res, fromRoute) =>{
 
 }
 
-module.exports=insertAddress
+module.exports=undoInsert

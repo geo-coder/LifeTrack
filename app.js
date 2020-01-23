@@ -34,6 +34,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/life-track', {
 
 
 
+
+
+
+
+
 app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({extended: 'true'}))
@@ -42,6 +47,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(userRouter)
 app.use(addressRouter)
+
 
 
 

@@ -6,6 +6,8 @@ block header
   -var buttonText='Back to Addresses Without Saving'
   -var button2disabled='disabled'
   -var button2visibility='visibility:hidden'
+  -var button3disabled='disabled'
+  -var button3visibility='visibility:hidden'
 
 block content
   div(id="addressformcontainer")
@@ -19,33 +21,33 @@ block content
           
           
           label(for='addressLineOne') Address: 
-          input(type='text' id='addressLineOne' value=address.addressLineOne name='addressLineOne' maxlength='50' required)
-          
+          input(type='text' id='addressLineOne' value=address.addressLineOne name='addressLineOne' maxlength='50' required readonly)
+          button(id='dummyDataButton') Add dummy data to first five fields
           br
           br
           
-          label(for='unitNo') Unit/Apt Number (if any): 
-          input(type='text' id='unitNo' value=address.unitNo name='unitNo' maxlength='10')
+          label(for='unitNo') Address Line 2 (Apt, Unit etc.): 
+          input(type='text' id='unitNo' value=address.unitNo name='unitNo' maxlength='10' readonly)
           
           br
           br
 
 
           label(for='city') City: 
-          input(type='text' id='city' value=address.city name='city' maxlength='50' required)
+          input(type='text' id='city' value=address.city name='city' maxlength='50' required readonly)
 
           br  
           br
           
           label(for='state') State Abbreviation: 
-          input(type='text' id='state' value=address.state name='state' maxlength="2" required)
+          input(type='text' id='state' value=address.state name='state' maxlength="2" required readonly)
 
           br  
           br
 
           
           label(for='zip') Zipcode: 
-          input(type='text' id='zip' value=address.zip name='zip' maxlength="10")
+          input(type='text' id='zip' value=address.zip name='zip' maxlength="10" readonly)
 
           br
           br
@@ -92,4 +94,5 @@ block content
           
           button(type='submit' id='newaddressubmit') Save changes to address
 
-          script(src="/scripts/edit-address.js")
+          //script(src="/scripts/edit-address.js")
+          script(src="/scripts/new-address.js")

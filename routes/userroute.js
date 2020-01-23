@@ -199,6 +199,7 @@ router.get('/logout', auth, async (req, res)=>{
         //await req.user.save()
 
         user.tokens=[]
+        user.deletedAddresses=[]
         await user.save()
         //res.send(req.user)
         res.redirect('/')

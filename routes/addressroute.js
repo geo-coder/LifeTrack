@@ -4,9 +4,16 @@ const User = require('../models/user')
 const mongoose=require('mongoose')
 const auth=require('../middleware/auth')
 const insertAddress=require('../services/insertAddress')
+const undoInsert=require('../services/undoInsert')
+const { sanitizeBody, body, check, validationResult } = require('express-validator')
+
+
+
+
+  
 
 //ADD A NEW ADDRESS
-router.post('/addresses', auth, async (req, res)=>{
+router.post('/addresses', auth, async (req, res)=>{ //, check('addressLineOne').escape()]
 
     
     
@@ -21,6 +28,39 @@ router.post('/addresses', auth, async (req, res)=>{
 
 
 })
+
+
+
+//undo
+
+
+
+router.get('/undo', auth, async (req, res)=>{
+
+    const user=await User.findById(req.user._id)
+
+    
+    if (user.deletedAddresses[0]){
+        const delAddressLen=user.deletedAddresses.length
+        
+        req.body=user.deletedAddresses[delAddressLen-1].address
+
+        
+        user.deletedAddresses.pop()
+        await user.save()
+        
+        
+        undoInsert(user, req, res, '/new_address')
+    } else {
+        res.end()
+    }
+    
+
+
+
+})
+
+
 
 
 
@@ -137,7 +177,7 @@ router.get('/edit_address/:id', auth, async (req, res)=>{
 })
 
 //save the edited address to db
-router.post('/edit_address/:id', auth, async (req, res)=>{
+router.post('/edit_address/:id', auth, async (req, res)=>{ //check('*').escape()
     const user=await User.findById(req.user._id)
     const address_id=req.params.id
 
@@ -178,6 +218,7 @@ router.get('/addresses', auth, async (req, res) =>{
     
     const user=await User.findById(req.user._id)
 
+    
     //res.send(user.addresses)
     
     
@@ -247,7 +288,7 @@ router.delete('/addresses/:id', auth, async(req, res)=>{
         
         //user.addresses=user.addresses.concat({address: req.body})
         
-        //user.deletedAddresses=user.deletedAddresses.concat(user.addresses[deleteIndex])
+        user.deletedAddresses=user.deletedAddresses.concat(user.addresses[deleteIndex])
         
         user.addresses.splice(deleteIndex,1)
         await user.save()

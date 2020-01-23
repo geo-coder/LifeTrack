@@ -16,9 +16,16 @@ html
         -var button2Text
         -var button2disabled
         -var button2visibility
+        -var button3disabled
+        -var button3visibility
+        
+        
         h1(id='title')='Life-Track'
         a(href=buttonLink class='bar-button') #{buttonText}
         a(href=button2Link class='bar-button' style=button2visibility button2disabled) #{button2Text}
+        a(class='bar-button' id='undo' style=button3visibility button2disabled) ↶ Undo Delete
+          
+        
         .rightdiv
           a(href='/view_profile' class='rightLink') Profile
           a(href='/logout' id='3signout' class='rightLink') Sign out         
