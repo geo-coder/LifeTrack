@@ -1,8 +1,10 @@
 const express=require('express')
 const app=express()
 const port = process.env.PORT 
-const userRouter=require('../lifetrackapp/routes/userroute')
-const addressRouter=require('../lifetrackapp/routes/addressroute')
+
+const userRouter=require('./routes/userroute')
+const addressRouter=require('./routes/addressroute')
+
 const helmet = require('helmet')
 const rateLimit = require("express-rate-limit")
 
