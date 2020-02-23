@@ -12,7 +12,7 @@ const bodyParser=require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-// /Users/george/mongodb/bin/mongod --dbpath=/Users/george/mongodb-data
+
 
 
 const mongodb=require('mongodb')
