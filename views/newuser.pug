@@ -15,38 +15,49 @@ block content
 
 
     div(id="newUserContent")
+      p Attention User: This app is simply a demo and should not be used to store any of your personal information. Only dummy data should be submitted for address information. (There is a button to facilitate this in the address entry form.) User accounts saved to the database will be periodically deleted.
       form(method='POST' action='/users' id='newUserForm')
           
           
-      
-        
-        label(for='firstname') First name: 
-        input(type='text' id='firstname' placeholder='first name' name='firstName' maxlength='50')
-        
-        br
-        br
+        label(for='userName') User name: 
+        input(type='text' id='userName' placeholder='user name' name='userName' maxlength='50' required)
 
-        label(for='lastname') Last name: 
-        input(type='text' id='lastname' placeholder='last name' name='lastName' maxlength='50')
+        br
+        br
         
-        br
-        br
+        //- label(for='firstname') First name: 
+        //- input(type='text' id='firstname' placeholder='first name' name='firstName' maxlength='50')
+        
+        //- br
+        //- br
+
+        //- label(for='lastname') Last name: 
+        //- input(type='text' id='lastname' placeholder='last name' name='lastName' maxlength='50')
+        
+        //- br
+        //- br
 
 
         
-        label(for='email') Email: 
-        input(type='email' id='email' placeholder='email' name='email' maxlength='50' required)
+        //- label(for='email') Email: 
+        //- input(type='email' id='email' placeholder='email' name='email' maxlength='50')
         
-        br
-        br
+        //- br
+        //- br
 
-        label(for='password') Password: 
-        input(type='password' id='password' name='password' required)
+        label(for='password') Password (five-character minimum): 
+        input(type='password' id='password' name='password' minlength='5' maxlength='200' required)
         br
         br
 
         label(for='pw2') Retype Password: 
         input(type='password' name='pw2' id='pw2' required)
+        br
+        br
+
+        label(for='question' id='questionLabel') 
+        input(type='text' name='question' id='question')
+
         br
         br
 

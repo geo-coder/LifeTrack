@@ -7,31 +7,31 @@ block header
   -var button2Link='/view_text'
   -var button2Text='View Addresses as Text'
   -var button3disabled='disabled'
-  -var button3visibility='visibility:hidden'
+  -var button3visibility='visibility:hidden;display:none'
 
 block content
     
     
     .textAddressList
       
-      button(id='copytext') Copy to Clipboard
-      h1 Address history for #{firstName} #{lastName}
+      
+      h1 Address history
       textarea(rows='15' cols='60' id='textaddresses')
         for val in addresses
             if val.address.unitNo
               |#{val.address.addressLineOne}
               |#{val.address.unitNo}
-              |#{val.address.city}
-              |#{val.address.formattedStart} 
+              |#{val.address.city}, #{val.address.state} #{val.address.zip}
+              |#{val.address.formattedStart} - #{val.address.formattedEnd}
               |
-              |   
+              |
             else
               |#{val.address.addressLineOne}
               |#{val.address.city}
-              |#{val.address.formattedStart} 
+              |#{val.address.formattedStart} - #{val.address.formattedEnd}
               |
               |
-              
+      button(id='copytext') Copy to Clipboard
             
 block scripts
   script(src="/scripts/view-text.js")

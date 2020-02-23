@@ -11,10 +11,10 @@
     
     background-image: linear-gradient(rgba(250, 244, 244, 0.5), rgba(255, 254, 254, 0.5)), url("/images/map.jpg");
   
-    /* Set a specific height */
+    
     height: 80%;
   
-    /* Position and center the image to scale nicely on all screens */
+    
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -86,6 +86,8 @@
     
 }
 
+
+
 header{
     background:rgb(114, 113, 113);
     padding:15px;
@@ -99,8 +101,9 @@ header{
     font-family: 'Kaushan Script', cursive;
     text-align: left;
     color:orange;
-    font-size:30px;
+    /*font-size:30px;*/
     display: inline;
+    font-size: 2em;
 }
 
 
@@ -206,6 +209,7 @@ button:hover{
 .addresslist{
     margin-top:120px;
     display:inline-block;
+    width:22%;
     
 }
 
@@ -215,7 +219,8 @@ button:hover{
     font-size: large;
     margin:auto;
     /* width:20%; */
-    width:380px;
+    /*width:380px;*/
+    width: 100%;
     /* border-style: solid;
     border-color:rgb(204, 201, 201); */
     background-color: lightgray;
@@ -226,12 +231,17 @@ button:hover{
     /* margin-top: 140px;
     margin-right: 500px; */
     float: right;
-    width:800px;
-    height:600px;
+    /*width:800px;*/
+    width: 50%;
+    /*height:600px;*/
+    height: 72%;
     background-color: lightgray;
     position:fixed;
-    top:150px;
-    left:480px;
+    /*top:150px;*/
+    top:20%;
+    /*left:480px;*/
+    left:28%;
+    text-align: center;
     
 
     
@@ -241,13 +251,17 @@ button:hover{
     background-color: rgb(114, 113, 113);
     color:orange;
     font-family: 'Kaushan Script', cursive;
+    text-align: left;
     
 }
 
 
 #addressnotes{
-    margin: 5px 15px;
+    /*margin: 5px 15px;*/
     font-size: large;
+    width: 90%;
+    height: 80%;
+    margin: auto;
 }
 
 
@@ -277,16 +291,22 @@ label{
 }
 
 .textAddressList{
-    margin-top:140px;
     margin:auto;
     margin-top:140px;
+    padding-bottom: 10px;
     background-color: lightgray;
     width:500px;
+    text-align: center;
 }
 
 .textAddressList p{
     text-align: left;
     font-size: large;
+}
+
+.textAddressList textarea{
+    margin:auto;
+    margin-bottom: 1em;
 }
 
 .entry{
@@ -375,6 +395,7 @@ label{
 
 #newUserContent{
     padding: 5px 10px;
+    
 }
 
 #clickableTitle{
@@ -389,4 +410,263 @@ label{
 
 .errorMessages{
     white-space:pre-line;
+}
+
+#question{
+
+    width: 5em;
+}
+
+
+
+
+
+@media screen and (max-width: 1024px) {
+
+    #dispbox{
+        top:10%;
+        width: 60%;
+        left: 35%;
+
+    }
+    .addresslist{
+
+        width: 30%;
+        
+    }
+   
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .bar-button{
+        margin: 0 .5em;
+        
+        
+        
+        padding: .5em;
+        
+    
+    }
+
+    #dispbox{
+
+        top:12%;
+    }
+    .addresslist{
+
+        margin-top: 13%;
+    }
+
+}
+
+@media screen and (max-width: 414px) {
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+
+textarea, a{
+    max-width: 60%;
+    
+}
+
+label, input {
+
+    display:block;
+    
+}
+
+
+.entry{
+    margin-top:35%;
+}
+
+
+.textAddressList{
+    margin-top: 50%;
+    width:100%;
+    text-align: center;
+    
+}
+
+.textAddressList button{
+    margin: 0 auto;
+}
+
+.textAddressList textarea{
+    max-width: 85%;
+    margin-bottom: 1em;
+}
+
+
+#newUserContent input{
+    margin-left: 1em;
+}
+
+#toPresent, #toPresentLabel {
+    display:inline-block;
+}
+
+#addressformcontainer{
+
+    margin-left: 1em;
+}
+
+ 
+ #dispbox{
+
+    display: none;
+    
+    
+ }
+
+ .addresslist{
+
+    margin-top: 60%;
+    width:100%;
+ }
+
+ .rightdiv{
+    float:left;
+}
+
+
+.rightLink{
+    display: inline-block;
+    
+    margin-right: 1em;
+}
+
+.material-icons.md-48{
+    display: none;
+    
+}
+
+
+
+.header{
+
+
+    text-align: center;
+    width:100%;
+}
+
+
+.bar-button{
+    margin: 0;
+    display: block;
+    margin-bottom: .5em;
+    width: 70%;
+    padding: .5em;
+    
+    /*previously set as display block, width 70%*/
+
+}
+
+
+.hero-content {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    border-color: darkgray;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 20px;
+    padding:30px;
+    
+    background-color: rgba(20, 19, 18, 0.9);
+    width: 100%;
+    text-align: center;
+    
+    
+}
+
+
+
+.hero-content a {
+    margin: auto;
+    margin-bottom: .5em;
+}
+
+#newUserContent {
+    width: 100%;
+    margin:0;
+    padding:0;
+    
+}
+
+#newUserContent p {
+    margin: 1em;
+    
+}
+
+#newUserContent label {
+    margin: 1em;
+}
+
+.entry{
+    width:100%;
+}
+
+.addresslist{
+
+    /* margin-top: 75%; */
+    margin: 65% 0%;
+    width:100%;
+ }
+
+ .address{
+     margin:auto;
+     width:97%;
+     margin-bottom: .5em;
+ }
+
+ button{
+    display:block;
+    word-wrap: break-word; 
+    width:100%;
+    max-width: 50%;
+ }
+
+
+}
+
+@media screen and (max-width: 360px) {
+
+    .textAddressList{
+        margin-top: 57%;
+    }
+
+    .addresslist{
+        margin: 70% 0%;
+        width:100%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+
+    .textAddressList{
+        margin-top: 65%;
+    }
+
+    .addresslist{
+
+        /* margin-top: 75%; */
+        margin: 75% 0%;
+        width:100%;
+     }
+
+     .address{
+         margin:auto;
+         width:98%;
+         margin-bottom: .5em;
+     }
+
 }

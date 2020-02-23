@@ -5,31 +5,25 @@ block header
   -var buttonLink='/addresses'
   -var buttonText='Back to Addresses Without Saving'
   -var button2disabled='disabled'
-  -var button2visibility='visibility:hidden'
+  -var button2visibility='visibility:hidden; display:none'
   -var button3disabled='disabled'
-  -var button3visibility='visibility:hidden'
+  -var button3visibility='visibility:hidden; display:none'
 
 
 block content
-  br
-  br
-  br
-  br
-  br
-  a(href='/restore') Dummy Data
-
-  
   div(id="addressformcontainer")
     form(method='POST' action='/addresses' id='address_form')
           h1="Add New Address"
           
           div
             
-           
+            button(id='dummyDataButton') (Demo mode) Refresh dummy data to first five fields
+            br
+            br
             
             label(for='addressLineOne') Address: 
             input(type='text' id='addressLineOne' placeholder='Address' name='addressLineOne' maxlength='50' required readonly)
-            button(id='dummyDataButton') Add dummy data to first five fields
+            
             br
             br
             
@@ -53,7 +47,7 @@ block content
             br
             
             label(for='zip') Zipcode: 
-            input(type='text' id='zip' name='zip' maxlength="10" readonly)
+            input(type='text' id='zip' name='zip' maxlength="10" required readonly)
 
             br  
             br
@@ -62,23 +56,26 @@ block content
             label(for='notes') Notes (1000 character max): 
             br
             //- input(type='text' id='notes' placeholder='Notes.' name='notes')//
-            textarea(id='notes' placeholder='notes' name='notes' rows='5' cols='60' maxlength="1000")
+            textarea(id='notes' placeholder='notes' name='notes' rows='5' cols='60' maxlength='10000')
             
 
             br  
             br
 
             label(for='startDate') Start Date: 
-            input(type='date' id='startDate' name='startDate')
+            input(type='date' id='startDate' name='startDate' required)
 
             br  
             br
 
             label(for='endDate') End Date: 
-            input(type='date' id='endDate' name='endDate')
+            input(type='date' id='endDate' name='endDate' required)
+
+            br
+            br
 
             
-            label(for='toPresent')                I'm still living here 
+            label(for='toPresent' id='toPresentLabel')                I'm still living here 
             
             input(type="checkbox" name="toPresent" value="toPresent" id='toPresent')
 

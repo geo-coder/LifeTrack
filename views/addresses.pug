@@ -1,3 +1,4 @@
+
 extends header.pug
 
 
@@ -22,10 +23,14 @@ block content
         div=val.address.formattedStart + ' to ' + val.address.formattedEnd
         a(class='delete') Delete
         a(class='edit') Edit
+        
         br
         br
+      
   #dispbox
       h1(id='detailboxheading')=''
-      p(id='addressnotes')
+      
+      textarea(id='addressnotes' cols="83" rows="25" readonly)
 block scripts
   script(src="/scripts/address-script.js")
+  

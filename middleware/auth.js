@@ -12,7 +12,9 @@ const auth = async (req, res, next) => {
         //const token = req.header('Authorization').replace('Bearer ', '')
         const token = req.cookies.token
         
-        const decoded=jwt.verify(token, 'this is private key')
+        
+        //const decoded=jwt.verify(token, 'this is private key')
+        const decoded=jwt.verify(token, process.env.AUTH_KEY)
         
         const user=await User.findOne({_id: decoded._id, 'tokens.token': token})
 

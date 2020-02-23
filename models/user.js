@@ -4,49 +4,58 @@ var jwt = require('jsonwebtoken')
 
 var userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    firstName: {
-        type: String,
-        maxlength: [64, 'First name exceeds maximum length of 64 characters.']
     
-    
-    },
-    lastName: {
+    userName:{
         type: String,
-        maxlength: [64, 'Last name exceeds maximum length of 64 characters.']
-    },
-    email: {
-        unique: true,
-        type: String,
+        maxlength: [50, 'User name exceeds maximum length of 50 characters'],
         required: true,
-        validate: {
-            validator: function(val) {
-                var pattern=/@/
-                
-                
-                if (pattern.test(val)===false) {
-                    return false
-                }
-            },
-            message: "E-mail missing @ symbol."
-        },
-        
+        unique: true
     },
+    
+    
     password: {
         type: String,
+        maxlength: [200, 'Password exceeds maximum length of 200 characters.'],
         required: true
     },
     addresses: [
 
         {
             address: {
-                addressLineOne: String,
-                unitNo: String,
-                city: String,
-                state: String,
-                zip: String,
-                notes: String,
-                startDate: String,
-                endDate: String,
+                addressLineOne: {
+                  type: String,
+                  maxlength: [50, 'Address line one exceeds maximum length of 50 characters.']
+                },
+                unitNo: {
+                  type: String,
+                  maxlength: 20
+                },
+                city: {
+                  type: String,
+                  maxlength: 50
+                },
+                state:{ 
+                    type: String,
+                    maxlength: 2
+
+                },
+                zip: {
+                    type: String,
+                    maxlength: 10
+
+                },
+                notes:{
+                    type: String, 
+                    maxlength: [20000, 'Exceeds 10,000 character length limit on Notes field']
+                },
+                startDate: {
+                    type: String,
+                    maxlength: 15
+                },
+                endDate: {
+                    type: String,
+                    maxlength: 15
+                },
                 formattedStart: String,
                 formattedEnd: String,
                 
@@ -108,9 +117,9 @@ userSchema.pre('save', async function () {
 })
 
 
-userSchema.statics.findByCredentials = async (email, password) => {
+userSchema.statics.findByCredentials = async (userName, password) => {
 
-    const user=await User.findOne({email})
+    const user=await User.findOne({userName})
 
     if(!user){
         throw new Error('Unable to login.')
@@ -127,11 +136,24 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 }
 
+//added to remove sensitive data from res; double check this
+userSchema.methods.toJSON = function () {
+
+
+    const user = this
+    const userObject = user.toObject()
+
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+
 
 userSchema.methods.genAuthToken=async function() { //generate authentication token, save it to the user
     const user = this
     
-    const token=jwt.sign({_id:user._id.toString()}, 'this is private key')
+    const token=jwt.sign({_id:user._id.toString()}, process.env.AUTH_KEY)
     user.tokens=user.tokens.concat({token})
     await user.save()
     return token

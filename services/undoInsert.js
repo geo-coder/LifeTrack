@@ -50,15 +50,24 @@ const undoInsert = async (user, req, res, fromRoute) =>{
         
         
 
+    
+    
+    if (user.addresses.length<=99) { 
+
+    await user.save()
 
     
-    await user.save()
-    
     res.send(user.addresses)
+
+    } else {
+        res.render('simpleError', {message:'Maximum address limit of 100 reached', goback:'/addresses', buttontext: 'OK'})
+    }
+
+    
     
 } catch (e) {
     
-    console.log(e.message)
+    
     //res.send({error: e.message})
     res.render('error', { message: e.message, goback:fromRoute})
 

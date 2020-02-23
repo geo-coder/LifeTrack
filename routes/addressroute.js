@@ -5,9 +5,55 @@ const mongoose=require('mongoose')
 const auth=require('../middleware/auth')
 const insertAddress=require('../services/insertAddress')
 const undoInsert=require('../services/undoInsert')
-const { sanitizeBody, body, check, validationResult } = require('express-validator')
+const rateLimit = require("express-rate-limit")
 
 
+
+function compareDates(a,b) {
+                
+    var compStartDate1=new Date(a.address.startDate)
+    var compStartDate2=new Date(b.address.startDate)
+    
+    return compStartDate2 - compStartDate1
+
+}
+
+
+// router.use(function (req, res, next) {
+    
+//     console.log('before body')
+//     console.log(req.body)
+    
+//     if (req.body){
+
+//         for(x in req.body){
+
+//             console.log(req.body[x])
+//             req.body[x]=validator.escape(req.body[x])
+
+//         }
+
+
+//     }    
+        
+//     console.log('After body')
+//     console.log(req.body)
+    
+//     next()
+// })
+
+
+
+const addressPostLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 min window
+    max: 100, // start blocking after 100  requests
+    message:
+      "Exceeded limit on new address entries. Try again later."
+  });
+
+router.post('/addresses', addressPostLimiter, (req, res, next) => {  //rate blocking middleware for address posts
+    next()
+}) 
 
 
   
@@ -20,11 +66,20 @@ router.post('/addresses', auth, async (req, res)=>{ //, check('addressLineOne').
     
     const user=await User.findById(req.user._id)
 
+    if (user.addresses.length<=99) {
    
     insertAddress(user, req, res, '/new_address')
 
     
     //res.redirect('/addresses')
+
+    } else {
+
+
+        res.render('simpleError', {message:'Maximum address limit of 100 reached', goback:'/addresses', buttontext: 'OK'})
+    }
+
+
 
 
 })
@@ -39,6 +94,7 @@ router.get('/undo', auth, async (req, res)=>{
 
     const user=await User.findById(req.user._id)
 
+    
     
     if (user.deletedAddresses[0]){
         const delAddressLen=user.deletedAddresses.length
@@ -64,95 +120,95 @@ router.get('/undo', auth, async (req, res)=>{
 
 
 
-//restore
+//this route is for testing purposes; inserts four dummy addresses into database
 
-router.get('/restore', auth, async (req, res)=>{
+// router.get('/restore', auth, async (req, res)=>{
 
     
      
-    const user=await User.findById(req.user._id)
+//     const user=await User.findById(req.user._id)
     
     
     
-    const dummy=[
-        {
+//     const dummy=[
+//         {
         
-            address : {
-                addressLineOne : "A",
-                unitNo : "",
-                city : "City",
-                state : "ST",
-                zip : "",
-                notes : "Notes",
-                startDate : "2020-01-01",
-                endDate : "2020-01-09",
-                formattedEnd : "01/09/2020",
-                formattedStart : "01/01/2020"
-            }
-        },
+//             address : {
+//                 addressLineOne : "A",
+//                 unitNo : "",
+//                 city : "City",
+//                 state : "ST",
+//                 zip : "",
+//                 notes : "Notes",
+//                 startDate : "2020-01-01",
+//                 endDate : "2020-01-09",
+//                 formattedEnd : "01/09/2020",
+//                 formattedStart : "01/01/2020"
+//             }
+//         },
 
-        {
+//         {
         
-            address : {
-                addressLineOne : "B",
-                unitNo : "",
-                city : "City",
-                state : "ST",
-                zip : "",
-                notes : "Notes",
-                startDate : "2010-01-01",
-                endDate : "2015-01-09",
-                formattedEnd : "01/09/2015",
-                formattedStart : "01/01/2010"
-            }
-        },
+//             address : {
+//                 addressLineOne : "B",
+//                 unitNo : "",
+//                 city : "City",
+//                 state : "ST",
+//                 zip : "",
+//                 notes : "Notes",
+//                 startDate : "2010-01-01",
+//                 endDate : "2015-01-09",
+//                 formattedEnd : "01/09/2015",
+//                 formattedStart : "01/01/2010"
+//             }
+//         },
 
-        {
+//         {
         
-            address : {
-                addressLineOne : "C",
-                unitNo : "",
-                city : "City",
-                state : "ST",
-                zip : "",
-                notes : "Notes",
-                startDate : "1990-01-01",
-                endDate : "2000-01-09",
-                formattedEnd : "01/09/2000",
-                formattedStart : "01/01/1990"
-            }
-        },
+//             address : {
+//                 addressLineOne : "C",
+//                 unitNo : "",
+//                 city : "City",
+//                 state : "ST",
+//                 zip : "",
+//                 notes : "Notes",
+//                 startDate : "1990-01-01",
+//                 endDate : "2000-01-09",
+//                 formattedEnd : "01/09/2000",
+//                 formattedStart : "01/01/1990"
+//             }
+//         },
 
 
-        {
+//         {
         
-            address : {
-                addressLineOne : "D",
-                unitNo : "",
-                city : "City",
-                state : "ST",
-                zip : "",
-                notes : "Notes",
-                startDate : "1980-01-01",
-                endDate : "1985-01-09",
-                formattedEnd : "01/09/1985",
-                formattedStart : "01/01/1980"
-            }
-        }
+//             address : {
+//                 addressLineOne : "D",
+//                 unitNo : "",
+//                 city : "City",
+//                 state : "ST",
+//                 zip : "",
+//                 notes : "Notes",
+//                 startDate : "1980-01-01",
+//                 endDate : "1985-01-09",
+//                 formattedEnd : "01/09/1985",
+//                 formattedStart : "01/01/1980"
+//             }
+//         }
 
 
-    ]
+//     ]
     
     
     
     
-    user.addresses=user.addresses.concat(dummy)
+//     user.addresses=user.addresses.concat(dummy)
     
 
-    user.save()
-    res.redirect('/addresses')
+//     user.save()
+//     res.redirect('/addresses')
 
-})
+// })
 
 
 
@@ -184,31 +240,70 @@ router.post('/edit_address/:id', auth, async (req, res)=>{ //check('*').escape()
     const foundAddressIndex=user.addresses.findIndex((element)=>element.id===address_id)
     
     
-    user.addresses.splice(foundAddressIndex,1)
-    var back= '/edit_address/'+address_id
-    
-    insertAddress(user, req, res, back)
-    
-    
-    
-    //user.addresses[foundAddressIndex]=req.body
+
 
     
-    // user.addresses[foundAddressIndex].address=req.body
+    const filter = {'_id':req.user._id,  "addresses": { "$elemMatch": { "_id": address_id }}}
+    const update={'addresses.$.address.$.addressLineOne': 'bullshit address'}
+    const update2={'userName':'barnowl'}   
+
+    let doc=await User.findOneAndUpdate(filter, update, {
+        new: true
+      })
+
     
-    // function compareDates(a,b) {
-                
-    //     var compStartDate1=new Date(a.address.startDate)
-    //     var compStartDate2=new Date(b.address.startDate)
-        
-    //     return compStartDate2 - compStartDate1
+      let findThing=User.findOne(filter)
+    user.addresses[foundAddressIndex].address.addressLineOne=req.body.addressLineOne
+    user.addresses[foundAddressIndex].address.unitNo=req.body.unitNo
+    user.addresses[foundAddressIndex].address.city=req.body.city
+    user.addresses[foundAddressIndex].address.state=req.body.state
+    user.addresses[foundAddressIndex].address.zip=req.body.zip
+    user.addresses[foundAddressIndex].address.notes=req.body.notes
+    user.addresses[foundAddressIndex].address.startDate=req.body.startDate
+    user.addresses[foundAddressIndex].address.endDate=req.body.endDate
+    user.addresses[foundAddressIndex].address.toPresent=req.body.toPresent
+    
+    
+    
+    
+    const startElements = req.body.startDate.split('-')
 
-    // }
-    // user.addresses=user.addresses.sort(compareDates)
+    const formattedStart=`${startElements[1]}/${startElements[2]}/${startElements[0]}`
+    let formattedEnd
+    if(req.body.toPresent){
+        formattedEnd = "to Present"
+    } else {
+        const endElements=req.body.endDate.split('-')
+        formattedEnd=`${endElements[1]}/${endElements[2]}/${endElements[0]}`
 
-    // user.save()
+    }
 
-    //res.redirect('/addresses')
+    
+    
+    
+    
+    user.addresses[foundAddressIndex].address.formattedStart=formattedStart
+    user.addresses[foundAddressIndex].address.formattedEnd=formattedEnd
+
+    
+
+
+    
+    
+    await user.save()
+    
+    
+    // user.addresses.splice(foundAddressIndex,1)
+    // var back= '/edit_address/'+address_id
+    
+    // insertAddress(user, req, res, back)
+
+    user.addresses=user.addresses.sort(compareDates)
+    
+    res.render('addresses', { addresses: user.addresses})
+    
+    
+    
 
 
 })
@@ -219,10 +314,10 @@ router.get('/addresses', auth, async (req, res) =>{
     const user=await User.findById(req.user._id)
 
     
-    //res.send(user.addresses)
     
     
-    //res.render('addresses', { title: 'Hey Idiot', message: 'Hello there!', addresses: user.addresses})
+    
+    
     
     //this just gives a user-friendly date format mm/dd/yyyy
 
@@ -254,9 +349,13 @@ router.get('/addresses', auth, async (req, res) =>{
     }
     
     await user.save()
-
-
-
+    
+    
+        
+    
+    user.addresses=user.addresses.sort(compareDates)
+    
+    
     
     res.render('addresses', { addresses: user.addresses})
 })
@@ -273,14 +372,7 @@ router.delete('/addresses/:id', auth, async(req, res)=>{
     const _id=req.params.id
 
     try {
-        //console.log(_id)
-        //console.log('user', user)
         
-        //console.log("this is the ide thing", user.addresses[0].id)
-        
-        //console.log(_id===user.addresses[0].id)
-        
-        //console.log('before: ', user.addresses)
         
         
         const deleteIndex=user.addresses.findIndex((element)=>element.id===_id)
@@ -290,6 +382,14 @@ router.delete('/addresses/:id', auth, async(req, res)=>{
         
         user.deletedAddresses=user.deletedAddresses.concat(user.addresses[deleteIndex])
         
+        //del first
+
+        if (user.deletedAddresses.length===100) { //100 max for undo storage
+            user.deletedAddresses.shift()
+        }
+
+
+
         user.addresses.splice(deleteIndex,1)
         await user.save()
  
@@ -312,7 +412,7 @@ router.delete('/addresses/:id', auth, async(req, res)=>{
 router.get('/view_text', auth, async(req, res)=>{
     const user=await User.findById(req.user._id)
     
-    res.render('view_text', {addresses:user.addresses, firstName:user.firstName, lastName:user.lastName})
+    res.render('view_text', {addresses:user.addresses})
 
 
 

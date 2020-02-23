@@ -50,7 +50,7 @@ const insertAddress = async (user, req, res, fromRoute) =>{
         
         
 
-
+        
     
     await user.save()
     
@@ -58,9 +58,10 @@ const insertAddress = async (user, req, res, fromRoute) =>{
     
 } catch (e) {
     
-    console.log(e.message)
-    //res.send({error: e.message})
+    
+    
     res.render('error', { message: e.message, goback:fromRoute})
+    
 
 }
 

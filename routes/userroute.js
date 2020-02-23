@@ -5,30 +5,29 @@ const mongoose=require('mongoose')
 const auth=require('../middleware/auth')
 const cookieParser = require('cookie-parser')
 const bcrypt=require('bcryptjs')
-
-
-// router.post('/users', async (req, res)=>{
-//         console.log('post')
-
-//     const user = new User(req.body)
-
-//     try {
-//         await user.save()
-
-//     } catch (e) {
-//         console.log("nope")
-//         res.sendStatus(e).send(400)
-//     }
+const rateLimit = require("express-rate-limit")
 
 
 
+const newAccountLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 60 min window
+    max: 10, // start blocking after 10  requests
+    message:
+      "To many accounts created from this IP. Try again later."
+  });
+
+router.post('/users', newAccountLimiter, (req, res, next) => {  //rate limiting middleware for new user accounts
+    next()
+}) 
 
 
-// })
 
 
-router.get('/', async (req, res) => {
-    res.render('index', { title: 'Hey Idiot', message: 'Hello there!' })
+
+
+
+router.get('/', async (req, res) => {    
+    res.render('index')
   })
 
 
@@ -56,29 +55,43 @@ router.get('/userarea', auth, async (req,res) =>{
 
 
   //create new user (post)
-router.post('/users', async (req, res)=>{
-
+router.post('/users', async (req, res)=>{    
     
-    // console.log("Post request worked")
-
-    // res.send("posted")
-
-    // try {
-    //     res.sendStatus(200).send('ok')
-    // }   catch (e) {
-    //     res.sendStatus(e).send(400)
-    // }
-
-    //console.log(req.body)
     
     try{
+    
+    
+    
+    const userNumber = await User.countDocuments()
+    
+    const oldestDocument = await User.find().sort({_id: 1}).limit(1)
+    
+    
+     if (userNumber===100){ //for demo purposes this code limits collection size to 100 records; oldest record deleted with every addition above 100
+
+        User.deleteOne({_id:oldestDocument[0]._id}, function (err) {
+
+
+            if (err) throw new Error
+        })
+
+
+    }
+    
+    
+    
+   
+    
+    
+    
+    
     const user = new User(req.body)
     user._id=new mongoose.Types.ObjectId
     
     const token = await user.genAuthToken()
 
     await user.save()
-    //console.log('token just before saving cookie', token)
+    
         
     //res.cookie('token', token).sendStatus(200) //.redirect('/userarea')
     res.cookie('token', token).redirect('/addresses')
@@ -86,7 +99,10 @@ router.post('/users', async (req, res)=>{
 
     } catch (e){
         
-        if (e.code===11000) {e.message='Sorry, that e-mail is already registered with Life-Track.'}
+        if (e.code===11000) {
+            
+            
+            e.message='Sorry, that username is already registered with Life-Track.'}
         if (e.name==='ValidationError') {
             var compMessages = ''
             for (field in e.errors) {
@@ -102,51 +118,33 @@ router.post('/users', async (req, res)=>{
         
         
         
-        res.render('simpleError', {message:e.message,goback:'/newuser'})
+        res.render('simpleError', {message:e.message,goback:'/newuser', buttontext: 'Retry'})
     }
     
 })
 
 
-//find user by id
-router.get('/users/:id', async (req, res)=>{
+// //find user by id
+// router.get('/users/:id', async (req, res)=>{
     
 
-    try{
-        const _id = req.params.id
+//     try{
+//         const _id = req.params.id
 
-        const user = await User.findById(_id)
+//         const user = await User.findById(_id)
 
-        if(!user){
-            throw new Error()
-        }
+//         if(!user){
+//             throw new Error()
+//         }
 
-        res.send(user)
-    } catch(e){
-        res.sendStatus(500).send('Bad request')
-    }
+//         res.send(user)
+//     } catch(e){
+//         res.sendStatus(500).send('Bad request')
+//     }
 
-
-
-
+// })
 
 
-
-
-})
-
-
-
-
-
-
-router.get('/users', async (req,res)=>{
-
-    res.send("hello")
-    
-
-
-})
 
 
 router.get('/login', async(req, res)=>{
@@ -163,11 +161,9 @@ router.post('/login', async(req,res)=>{
     
     
     try{
-        // if(!user){
-        //     throw new Error("nah")
-        // }
+        
 
-        const user = await User.findByCredentials(req.body.email, req.body.password)
+        const user = await User.findByCredentials(req.body.userName, req.body.password)
         //await user.genAuthToken()
 
         const token = await user.genAuthToken()
@@ -178,8 +174,8 @@ router.post('/login', async(req,res)=>{
         
 
     } catch(e){
-        console.log('error caught', e)
-        res.sendStatus(400)
+        
+        res.render('simpleError', {message:e.message,goback:'/login', buttontext: 'Retry'})
 
     }
 
@@ -195,13 +191,11 @@ router.get('/logout', auth, async (req, res)=>{
 
     try {
 
-        //req.user.tokens=[]
-        //await req.user.save()
 
         user.tokens=[]
         user.deletedAddresses=[]
         await user.save()
-        //res.send(req.user)
+        
         res.redirect('/')
     } catch (e) {
         res.status(500).send()
@@ -212,9 +206,9 @@ router.get('/logout', auth, async (req, res)=>{
 })
 
 
-router.get('/me', auth, async (req, res) => {
-    res.send(req.user)
-    })
+// router.get('/me', auth, async (req, res) => {
+//     res.send(req.user)
+//     })
 
 
 
@@ -223,7 +217,7 @@ router.get('/me', auth, async (req, res) => {
 
 router.get('/view_profile', auth, async(req, res) =>{
 
-    res.render('view_profile', {firstName:req.user.firstName, lastName:req.user.lastName, email:req.user.email})
+    res.render('view_profile', {userName:req.user.userName})
 
 
 })
@@ -231,24 +225,20 @@ router.get('/view_profile', auth, async(req, res) =>{
 
 
 router.get('/update_profile', auth, async(req, res) =>{
-    res.render('update_profile', {firstName:req.user.firstName, lastName:req.user.lastName, email:req.user.email})
+    res.render('update_profile', {userName:req.user.userName})
 })
 
 
 
 router.post('/update_profile', auth, async(req, res) =>{
     
-    //const user = await User.findByCredentials(req.body.email, req.body.password)    
+    
     
     const user=await User.findById(req.user._id)
     
-    user.firstName=req.body.firstName
-    user.lastName=req.body.lastName
-    user.email=req.body.email
     
-    //console.log(req.body)
-    //console.log(user)
-
+    user.userName=req.body.userName
+    
     await user.save()
 
 
@@ -273,10 +263,7 @@ router.post('/change_pw', auth, async(req, res) =>{
     try{
         
         
-        // await bcrypt.compare(req.body.oldPW, user.password, function(err, result){
-    
-            
-        // })
+        
 
         const match = await bcrypt.compare(req.body.oldPW, user.password)
 
@@ -300,8 +287,7 @@ router.post('/change_pw', auth, async(req, res) =>{
         res.redirect('/addresses')
 
     } catch(e){
-        //console.log(e.message)
-        //res.sendStatus(400)
+        
         res.render('error', {message:e.message, goback:'/change_pw'})
 
 
