@@ -33,13 +33,14 @@ mongoose.set('useFindAndModify', false);
 
 // const databaseName = 'life-track'
 
-mongoose.connect('mongodb://127.0.0.1:27017/life-track', {
+mongoose.connect(process.env.MONGODB_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
 
 })
 
+//process.env.MONGODB_URL
 
 
 
